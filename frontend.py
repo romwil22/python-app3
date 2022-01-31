@@ -18,7 +18,47 @@ close
 from tkinter import *
 import backend
 
+def view_command():
+    listEntries.delete(0,END)
+    for row in backend.view():
+        listEntries.insert(END, row)
+        
+def search_command():
+    listEntries.delete(0,END)
+    for row in backend.search(titleEntry.get(),authorEntry.get(),yearEntry.get(),isbnEntry.get()):
+        listEntries.insert(END,row)
+        
+def add_command():
+    backend.insert(titleEntry.get(),authorEntry.get(),yearEntry.get(),isbnEntry.get())
+    listEntries.delete(0,END)
+    listEntries.insert(END,(titleEntry.get(),authorEntry.get(),yearEntry.get(),isbnEntry.get()))
+        
+def get_selected_row(event):
+    try:
+        global selectedTuple
+        index = listEntries.curselection()[0]
+        selectedTuple = listEntries.get(index)
+        tEntry.delete(0,END)
+        tEntry.insert(END,selectedTuple[1])
+        aEntry.delete(0,END)
+        aEntry.insert(END,selectedTuple[2])
+        yEntry.delete(0,END)
+        yEntry.insert(END,selectedTuple[3])
+        iEntry.delete(0,END)
+        iEntry.insert(END,selectedTuple[4])
+    except IndexError:
+        pass
+
+    
+def delete_command():
+    backend.delete(selectedTuple[0])
+    
+def update_command():
+    backend.update(selectedTuple[0],titleEntry.get(),authorEntry.get(),yearEntry.get(),isbnEntry.get())
+    
+    
 window = Tk()
+window.wm_title("Books Database")
 
 titleLabel = Label(window, text="Title:")
 titleLabel.grid(row=0,column=0)
@@ -57,22 +97,24 @@ listScrollBar.grid(row=2,rowspan=6,column=2)
 listEntries.configure(yscrollcommand=listScrollBar.set)
 listScrollBar.configure(command=listEntries.yview)
 
-viewButton = Button(window,text="View all books",width=12)
+listEntries.bind("<<ListboxSelect>>",get_selected_row)
+
+viewButton = Button(window,text="View books",width=12,command=view_command)
 viewButton.grid(row=2,column=3)
 
-searchButton = Button(window,text="Search book",width=12)
+searchButton = Button(window,text="Search book",width=12,command=search_command)
 searchButton.grid(row=3,column=3)
 
-addButton = Button(window,text="Add book",width=12)
+addButton = Button(window,text="Add book",width=12,command=add_command)
 addButton.grid(row=4,column=3)
 
-updateButton = Button(window,text="Update book",width=12)
+updateButton = Button(window,text="Update book",width=12,command=update_command)
 updateButton.grid(row=5,column=3)
 
-deleteButton = Button(window,text="Delete book",width=12)
+deleteButton = Button(window,text="Delete book",width=12,command=delete_command)
 deleteButton.grid(row=6,column=3)
 
-closeButton = Button(window,text="Close",width=12)
+closeButton = Button(window,text="Close",width=12,command=window.destroy)
 closeButton.grid(row=7,column=3)
 
 

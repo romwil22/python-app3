@@ -47,10 +47,3 @@ def delete(i):
     conn.close()
 
 connect()
-
-# insert("Books delete id 2","romwil",2022,9879564987)
-# print(view())
-# delete(2)
-update(1,"update test function","pilapil",2022,6543564654)
-
-print(view())
