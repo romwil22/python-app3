@@ -15,7 +15,9 @@ close
 
 """
 
+from msilib.schema import Font
 from tkinter import *
+from turtle import color
 import backend
 
 
@@ -61,40 +63,42 @@ def update_command():
 
 # window GUI
 window = Tk()
-window.wm_title("Books Database")
+window.wm_title("Book Inventory")
+window.iconbitmap("icon/boooookk_lQu_1.ico")
+
 
 # label section
-titleLabel = Label(window, text="Title:")
-authorLabel = Label(window, text="Author:")
-yearLabel = Label(window, text="Year:")
-isbnLabel = Label(window, text="ISBN:")
+titleLabel = Label(window, text="Title:", font="Arial")
+authorLabel = Label(window, text="Author:", font="Arial")
+yearLabel = Label(window, text="Year:", font="Arial")
+isbnLabel = Label(window, text="ISBN:", font="Arial")
 
 
 
 # entry section
 titleEntry = StringVar()
-tEntry = Entry(window,textvariable=titleEntry)
+tEntry = Entry(window,textvariable=titleEntry, borderwidth=3, width=20)
 
 authorEntry = StringVar()
-aEntry = Entry(window,textvariable=authorEntry)
+aEntry = Entry(window,textvariable=authorEntry, borderwidth=3, width=20)
 
 yearEntry = StringVar()
-yEntry = Entry(window,textvariable=yearEntry)
+yEntry = Entry(window,textvariable=yearEntry, borderwidth=3)
 
 isbnEntry = StringVar()
-iEntry = Entry(window,textvariable=isbnEntry)
+iEntry = Entry(window,textvariable=isbnEntry, borderwidth=3)
 
 # button section
-viewButton = Button(window,text="View books",width=12,command=view_command)
-searchButton = Button(window,text="Search book",width=12,command=search_command)
-addButton = Button(window,text="Add book",width=12,command=add_command)
-updateButton = Button(window,text="Update book",width=12,command=update_command)
-deleteButton = Button(window,text="Delete book",width=12,command=delete_command)
-closeButton = Button(window,text="Close",width=12,command=window.destroy)
+viewButton = Button(window,text="View books",width=20, fg="red", bg="lightblue", padx=3, pady=3, command=view_command)
+searchButton = Button(window,text="Search book",width=20,fg="red", bg="lightblue", padx=3, pady=3, command=search_command)
+addButton = Button(window,text="Add book",width=20,fg="red", bg="lightblue", padx=3, pady=3, command=add_command)
+updateButton = Button(window,text="Update book",width=20,fg="red", bg="lightblue", padx=3, pady=3, command=update_command)
+deleteButton = Button(window,text="Delete book",width=20,fg="red", bg="lightblue", padx=3, pady=3, command=delete_command)
+closeButton = Button(window,text="Close",width=20,fg="green", bg="black", padx=3, pady=3, command=window.destroy)
 
 
 # list entry section
-listEntries = Listbox(window,height=6,width=35)
+listEntries = Listbox(window,height=15,width=35)
 
 #scroll bar section
 listScrollBar = Scrollbar(window)
@@ -122,7 +126,7 @@ yEntry.grid(row=1,column=1)
 iEntry.grid(row=1,column=3)
 
 # list entry
-listEntries.grid(row=2,rowspan=6, column=0,columnspan=2)
+listEntries.grid(row=2,rowspan=6, column=0,columnspan=2,)
 
 # scroll bar
 listScrollBar.grid(row=2,rowspan=6,column=2)
